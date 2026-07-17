@@ -138,3 +138,36 @@
   stroke-dasharray: 4 6;
   animation: dash-flow 1.4s linear infinite;
 }
+
+/* Full-page ambient background: soft grid + rising particles */
+.page-grid {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+}
+
+@keyframes drift-up {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-110vh) translateX(var(--drift-x, 20px)); opacity: 0; }
+}
+
+.bg-particle {
+  position: fixed;
+  bottom: -5vh;
+  border-radius: 9999px;
+  pointer-events: none;
+  animation: drift-up linear infinite;
+}
+
+@keyframes mesh-shift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(3%, -2%) rotate(3deg); }
+}
+.animate-mesh-shift {
+  animation: mesh-shift 22s ease-in-out infinite;
+}

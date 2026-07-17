@@ -5,6 +5,7 @@ import LanguageSwitch from './components/LanguageSwitch';
 import Hero from './components/Hero';
 import DetailsPanel from './components/DetailsPanel';
 import Footer from './components/Footer';
+import AmbientBackground from './components/AmbientBackground';
 
 export default function App() {
   const [language, setLanguage] = useState<Language>('en');
@@ -13,14 +14,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-canvas">
-      <div
-        className="aurora-orb animate-float-slower pointer-events-none fixed left-[-10rem] top-[10%] h-96 w-96 bg-accent/10"
-        aria-hidden="true"
-      />
-      <div
-        className="aurora-orb animate-float-slow pointer-events-none fixed right-[-8rem] bottom-[5%] h-80 w-80 bg-primary/5"
-        aria-hidden="true"
-      />
+      <AmbientBackground />
 
       <a
         href="#main-content"
