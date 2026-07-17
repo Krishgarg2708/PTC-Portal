@@ -23,11 +23,19 @@ const cellClass: Record<string, string> = {
 
 export default function MiniSheet() {
   return (
-    <div
-      className="grid gap-1.5 rounded-2xl bg-slate-50 p-4"
+    <motion.div
+      className="group relative grid gap-1.5 overflow-hidden rounded-2xl bg-slate-50 p-4 shadow-inner"
       role="img"
       aria-label="Illustration of a spreadsheet grid with color-coded permission cells"
+      whileHover={{ scale: 1.015 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 20 }}
     >
+      <motion.div
+        className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent"
+        animate={{ x: ['-100%', '160%'] }}
+        transition={{ duration: 2.6, repeat: Infinity, repeatDelay: 1.4, ease: 'easeInOut' }}
+        aria-hidden="true"
+      />
       {ROWS.map((row, rowIndex) => (
         <div key={rowIndex} className="flex gap-1.5">
           {Array.from({ length: COLS }).map((_, colIndex) => (
@@ -36,6 +44,7 @@ export default function MiniSheet() {
               className={`h-4 flex-1 rounded-sm sm:h-5 ${cellClass[row]}`}
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.25, zIndex: 1 }}
               transition={{
                 delay: (rowIndex * COLS + colIndex) * 0.025,
                 duration: 0.3,
@@ -45,6 +54,6 @@ export default function MiniSheet() {
           ))}
         </div>
       ))}
-    </div>
+    </motion.div>
   );
 }

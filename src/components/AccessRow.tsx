@@ -14,17 +14,20 @@ export default function AccessRow({ entry, swatchClass, icon = 'user', index }: 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, duration: 0.35 }}
-      className="flex items-start gap-4 rounded-xl border border-slate-100 bg-white p-4 shadow-sm"
+      initial={{ opacity: 0, x: -14 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.07, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ x: 4, borderColor: '#2563EB', boxShadow: '0 8px 24px -10px rgba(37,99,235,0.35)' }}
+      className="flex items-start gap-4 rounded-xl border border-slate-100 bg-white p-4 shadow-sm transition-shadow"
     >
-      <span
+      <motion.span
+        whileHover={{ rotate: 8, scale: 1.1 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 15 }}
         className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${swatchClass}`}
         aria-hidden="true"
       >
         <Icon className="h-4 w-4 text-primary" />
-      </span>
+      </motion.span>
       <div className="min-w-0">
         <p className="font-display text-sm font-semibold text-primary">{entry.role}</p>
         <p className="mt-0.5 truncate font-mono text-sm text-accent">{entry.email}</p>
