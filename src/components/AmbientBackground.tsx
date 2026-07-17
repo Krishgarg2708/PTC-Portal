@@ -4,9 +4,9 @@ import { useMemo } from 'react';
 // a deep void gradient, drifting nebula clouds in the brand's electric
 // palette, a faint circuit-like grid, a twinkling starfield, streaking
 // shooting stars, and a handful of softly rising embers.
-const STAR_COUNT = 70;
+const STAR_COUNT = 90;
 const EMBER_COUNT = 12;
-const SHOOTING_STAR_COUNT = 6;
+const SHOOTING_STAR_COUNT = 16;
 
 export default function AmbientBackground() {
   const stars = useMemo(
@@ -42,16 +42,43 @@ export default function AmbientBackground() {
   const shootingStars = useMemo(
     () =>
       Array.from({ length: SHOOTING_STAR_COUNT }).map((_, i) => {
-        const startX = Math.round(Math.random() * 90);
-        const startY = Math.round(Math.random() * 45);
-        const angle = -28 - Math.round(Math.random() * 14);
-        const travelX = -(45 + Math.round(Math.random() * 30));
-        const travelY = 40 + Math.round(Math.random() * 30);
-        const duration = 6 + Math.round(Math.random() * 5);
-        const delay = i * 3.2 + Math.random() * 2.5;
-        const palette = ['text-accent', 'text-plasma', 'text-warning'];
+        // Alternate between two diagonal "families" so streaks criss-cross
+        // the sky instead of all falling the same way.
+        const goingLeft = i % 2 === 0;
+        const startX = goingLeft
+          ? 25 + Math.round(Math.random() * 75)
+          : Math.round(Math.random() * 75);
+        const startY = Math.round(Math.random() * 65);
+        const angle = goingLeft
+          ? -22 - Math.round(Math.random() * 20)
+          : 200 + Math.round(Math.random() * 20);
+        const travelDist = 55 + Math.round(Math.random() * 35);
+        const travelX = goingLeft ? -travelDist : travelDist;
+        const travelY = 35 + Math.round(Math.random() * 45);
+
+        // Roughly a fifth are big, dramatic streaks; the rest are quicker
+        // and smaller, for a natural, layered sense of depth.
+        const isBig = Math.random() < 0.22;
+        const trailLength = isBig ? 260 + Math.round(Math.random() * 60) : 110 + Math.round(Math.random() * 90);
+        const headSize = isBig ? 8 : 4 + Math.round(Math.random() * 2);
+        const duration = isBig ? 3.4 + Math.random() * 1.4 : 5 + Math.random() * 4;
+        const delay = Math.round(Math.random() * 90) / 10;
+
+        const palette = ['text-accent', 'text-plasma', 'text-warning', 'text-white'];
         const color = palette[i % palette.length];
-        return { id: i, startX, startY, angle, travelX, travelY, duration, delay, color };
+        return {
+          id: i,
+          startX,
+          startY,
+          angle,
+          travelX,
+          travelY,
+          trailLength,
+          headSize,
+          duration,
+          delay,
+          color,
+        };
       }),
     []
   );
@@ -102,6 +129,8 @@ export default function AmbientBackground() {
               '--angle': `${s.angle}deg`,
               '--travel-x': `${s.travelX}vw`,
               '--travel-y': `${s.travelY}vh`,
+              '--trail-length': `${s.trailLength}px`,
+              '--head-size': `${s.headSize}px`,
               animationDuration: `${s.duration}s`,
               animationDelay: `${s.delay}s`,
             } as React.CSSProperties
