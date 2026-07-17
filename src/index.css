@@ -4,7 +4,7 @@
 
 @layer base {
   * {
-    @apply border-slate-200;
+    @apply border-white/10;
   }
 
   html {
@@ -13,29 +13,31 @@
 
   body {
     -webkit-font-smoothing: antialiased;
+    background: #05061a;
+    color: #f2f4ff;
   }
 
   :focus-visible {
-    outline: 2px solid #2563eb;
+    outline: 2px solid #22d3ee;
     outline-offset: 3px;
     border-radius: 4px;
   }
 
   ::selection {
-    background-color: rgba(37, 99, 235, 0.2);
-    color: #0f172a;
+    background-color: rgba(180, 120, 255, 0.35);
+    color: #f2f4ff;
   }
 
   ::-webkit-scrollbar {
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #f8fafc;
+    background: #05061a;
   }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #2563eb, #0f172a);
+    background: linear-gradient(180deg, #22d3ee, #b478ff);
     border-radius: 999px;
-    border: 2px solid #f8fafc;
+    border: 2px solid #05061a;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -45,21 +47,24 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+    .shooting-star, .star-twinkle {
+      opacity: 0 !important;
+    }
   }
 }
 
 .blueprint-grid {
   background-image:
-    linear-gradient(rgba(37, 99, 235, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 99, 235, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(34, 211, 238, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.09) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
-/* Ambient gradient orbs used behind the hero for depth */
+/* Ambient gradient orbs used behind the hero for depth: nebula clouds */
 .aurora-orb {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(70px);
+  filter: blur(80px);
   pointer-events: none;
   will-change: transform;
 }
@@ -84,7 +89,7 @@
 
 /* Gradient text used for the headline accent */
 .text-gradient {
-  background: linear-gradient(120deg, #0f172a 0%, #2563eb 55%, #0f172a 100%);
+  background: linear-gradient(120deg, #f2f4ff 0%, #22d3ee 35%, #b478ff 65%, #f2f4ff 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -111,7 +116,7 @@
   background: linear-gradient(
     115deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.4) 50%,
     transparent 100%
   );
   transform: skewX(-20deg);
@@ -123,11 +128,11 @@
   100% { left: 130%; }
 }
 
-/* Glass card surface */
+/* Glass card surface, tuned for a dark cosmic backdrop */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: rgba(18, 22, 56, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 /* Animated dashed connector used decoratively in the details grid */
@@ -139,20 +144,29 @@
   animation: dash-flow 1.4s linear infinite;
 }
 
-/* Full-page ambient background: soft grid + rising particles */
+/* Full-page ambient background: deep space void + soft grid + rising particles */
 .page-grid {
   background-image:
-    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(148, 163, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 255, 0.05) 1px, transparent 1px);
   background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 40%, transparent 100%);
+}
+
+/* Deep space base gradient sitting behind everything else */
+.void-gradient {
+  background:
+    radial-gradient(ellipse 60% 45% at 18% 8%, rgba(180, 120, 255, 0.16), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 85% 18%, rgba(34, 211, 238, 0.14), transparent 60%),
+    radial-gradient(ellipse 70% 55% at 50% 95%, rgba(255, 194, 75, 0.06), transparent 65%),
+    linear-gradient(180deg, #05061a 0%, #0a0d2b 45%, #05061a 100%);
 }
 
 @keyframes drift-up {
   0% { transform: translateY(0) translateX(0); opacity: 0; }
-  10% { opacity: 0.6; }
-  90% { opacity: 0.5; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.55; }
   100% { transform: translateY(-110vh) translateX(var(--drift-x, 20px)); opacity: 0; }
 }
 
@@ -162,6 +176,7 @@
   border-radius: 9999px;
   pointer-events: none;
   animation: drift-up linear infinite;
+  box-shadow: 0 0 8px 1px currentColor;
 }
 
 @keyframes mesh-shift {
@@ -170,4 +185,54 @@
 }
 .animate-mesh-shift {
   animation: mesh-shift 22s ease-in-out infinite;
+}
+
+/* Twinkling starfield dots */
+@keyframes twinkle {
+  0%, 100% { opacity: var(--star-min, 0.15); transform: scale(0.85); }
+  50% { opacity: var(--star-max, 0.95); transform: scale(1); }
+}
+
+.star-twinkle {
+  position: fixed;
+  border-radius: 9999px;
+  background: #ffffff;
+  pointer-events: none;
+  animation: twinkle ease-in-out infinite;
+  box-shadow: 0 0 4px 0.5px rgba(255, 255, 255, 0.8);
+}
+
+/* Shooting stars: a bright head with a fading tapered trail, streaking
+   diagonally across the viewport at irregular intervals. */
+@keyframes shoot {
+  0% { transform: translate(0, 0) rotate(var(--angle, -35deg)); opacity: 0; }
+  4% { opacity: 1; }
+  18% { opacity: 1; }
+  32% { transform: translate(var(--travel-x, -60vw), var(--travel-y, 60vh)) rotate(var(--angle, -35deg)); opacity: 0; }
+  100% { transform: translate(var(--travel-x, -60vw), var(--travel-y, 60vh)) rotate(var(--angle, -35deg)); opacity: 0; }
+}
+
+.shooting-star {
+  position: fixed;
+  top: var(--start-y, 0);
+  left: var(--start-x, 0);
+  width: 160px;
+  height: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, currentColor, rgba(255, 255, 255, 0.6) 40%, transparent 100%);
+  pointer-events: none;
+  animation: shoot linear infinite;
+  will-change: transform, opacity;
+}
+.shooting-star::before {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translateY(-50%);
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 0 12px 3px currentColor, 0 0 4px 1px #fff;
 }
