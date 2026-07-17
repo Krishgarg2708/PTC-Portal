@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
-import { ChevronDown, Download, FileSpreadsheet } from 'lucide-react';
+import { ChevronDown, ExternalLink, FileSpreadsheet } from 'lucide-react';
 import type { Translation } from '../i18n/translations';
 
 const SPREADSHEET_URL =
-  'https://docs.google.com/spreadsheets/d/18PXa8_M9q2VtBUU1am_utrr4Jd76sJ68FMz-KtOyb5w/export?format=xlsx';
+  'https://docs.google.com/spreadsheets/d/18PXa8_M9q2VtBUU1am_utrr4Jd76sJ68FMz-KtOyb5w/edit?gid=0#gid=0';
 
 interface Props {
   t: Translation;
@@ -12,14 +12,8 @@ interface Props {
 }
 
 export default function Hero({ t, detailsOpen, toggleDetails }: Props) {
-  const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = SPREADSHEET_URL;
-    link.setAttribute('download', 'PTC_Spreadsheet.xlsx');
-    link.rel = 'noopener noreferrer';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleOpenLink = () => {
+    window.open(SPREADSHEET_URL, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -66,12 +60,12 @@ export default function Hero({ t, detailsOpen, toggleDetails }: Props) {
         >
           <motion.button
             type="button"
-            onClick={handleDownload}
+            onClick={handleOpenLink}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="flex w-full max-w-sm items-center justify-center gap-2.5 rounded-xl2 bg-accent px-8 py-4 text-base font-semibold text-white shadow-soft transition-colors hover:bg-blue-700 sm:w-auto"
           >
-            <Download className="h-5 w-5" aria-hidden="true" />
+            <ExternalLink className="h-5 w-5" aria-hidden="true" />
             {t.downloadCta}
           </motion.button>
           <p className="text-xs text-slate-400">{t.downloadHint}</p>
