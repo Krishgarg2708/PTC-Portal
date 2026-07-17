@@ -13,7 +13,7 @@ export default function Footer({ t }: Props) {
       transition={{ delay: 0.5, duration: 0.6 }}
       className="mx-auto mt-12 max-w-3xl pb-10 text-center"
     >
-      <p className="text-xs text-slate-400">{t.footerNote}</p>
+      <p className="text-xs text-muted/70">{t.footerNote}</p>
     </motion.footer>
   );
 }

@@ -17,22 +17,22 @@ export default function Hero({ t, detailsOpen, toggleDetails }: Props) {
   };
 
   return (
-    <section className="relative overflow-hidden rounded-xl2 border border-slate-100 bg-white px-6 py-16 shadow-soft sm:px-12 sm:py-24">
+    <section className="glass-panel relative overflow-hidden rounded-xl2 border border-white/10 px-6 py-16 shadow-glow sm:px-12 sm:py-24">
       {/* Ambient background layers */}
       <div
         className="blueprint-grid pointer-events-none absolute inset-0 animate-gridpulse"
         aria-hidden="true"
       />
       <div
-        className="aurora-orb animate-float-slow left-[-6rem] top-[-4rem] h-72 w-72 bg-accent/20"
+        className="aurora-orb animate-float-slow left-[-6rem] top-[-4rem] h-72 w-72 bg-accent/25"
         aria-hidden="true"
       />
       <div
-        className="aurora-orb animate-float-slower bottom-[-6rem] right-[-4rem] h-80 w-80 bg-success/10"
+        className="aurora-orb animate-float-slower bottom-[-6rem] right-[-4rem] h-80 w-80 bg-plasma/20"
         aria-hidden="true"
       />
       <div
-        className="aurora-orb animate-float-slow right-1/3 top-1/2 h-40 w-40 bg-warning/10"
+        className="aurora-orb animate-float-slow right-1/3 top-1/2 h-40 w-40 bg-warning/15"
         aria-hidden="true"
         style={{ animationDelay: '2s' }}
       />
@@ -42,7 +42,7 @@ export default function Hero({ t, detailsOpen, toggleDetails }: Props) {
           initial={{ opacity: 0, y: 8, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/80 px-3 py-1 text-xs font-medium uppercase tracking-wider text-slate-500 shadow-sm backdrop-blur"
+          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted shadow-sm backdrop-blur"
         >
           <motion.span
             animate={{ rotate: [0, 15, -10, 0] }}
@@ -73,7 +73,7 @@ export default function Hero({ t, detailsOpen, toggleDetails }: Props) {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.24 }}
-          className="mt-5 text-base text-slate-500 sm:text-lg"
+          className="mt-5 text-base text-muted sm:text-lg"
         >
           {t.subtitle}
         </motion.p>
@@ -87,10 +87,10 @@ export default function Hero({ t, detailsOpen, toggleDetails }: Props) {
           <motion.button
             type="button"
             onClick={handleOpenLink}
-            whileHover={{ scale: 1.04, y: -2, boxShadow: '0 20px 45px -15px rgba(37,99,235,0.55)' }}
+            whileHover={{ scale: 1.04, y: -2, boxShadow: '0 20px 45px -15px rgba(180,120,255,0.55)' }}
             whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 400, damping: 18 }}
-            className="shimmer-btn group flex w-full max-w-sm items-center justify-center gap-2.5 rounded-xl2 bg-gradient-to-r from-accent via-blue-600 to-primary bg-[length:200%_auto] px-8 py-4 text-base font-semibold text-white shadow-soft transition-[background-position] duration-500 hover:bg-right sm:w-auto"
+            className="shimmer-btn group flex w-full max-w-sm items-center justify-center gap-2.5 rounded-xl2 bg-gradient-to-r from-accent via-plasma to-primary bg-[length:200%_auto] px-8 py-4 text-base font-semibold text-white shadow-soft transition-[background-position] duration-500 hover:bg-right sm:w-auto"
           >
             <motion.span
               className="inline-flex"
@@ -101,16 +101,16 @@ export default function Hero({ t, detailsOpen, toggleDetails }: Props) {
             </motion.span>
             {t.downloadCta}
           </motion.button>
-          <p className="text-xs text-slate-400">{t.downloadHint}</p>
+          <p className="text-xs text-muted/70">{t.downloadHint}</p>
 
           <motion.button
             type="button"
             onClick={toggleDetails}
             aria-expanded={detailsOpen}
             aria-controls="spreadsheet-details"
-            whileHover={{ scale: 1.03, borderColor: '#2563EB' }}
+            whileHover={{ scale: 1.03, borderColor: '#22D3EE' }}
             whileTap={{ scale: 0.97 }}
-            className="mt-4 flex items-center gap-2 rounded-xl2 border border-slate-300 px-6 py-3 text-sm font-semibold text-primary transition-colors hover:text-accent"
+            className="mt-4 flex items-center gap-2 rounded-xl2 border border-white/15 px-6 py-3 text-sm font-semibold text-ink transition-colors hover:text-accent"
           >
             <FileSpreadsheet className="h-4 w-4 opacity-60" aria-hidden="true" />
             {detailsOpen ? t.hideDetails : t.viewDetails}

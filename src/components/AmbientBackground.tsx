@@ -1,39 +1,116 @@
 import { useMemo } from 'react';
 
-// Purely decorative, full-viewport backdrop: a faint drifting grid, two large
-// slow-moving gradient meshes, and a handful of softly rising particles.
-// Keeps the page from ever feeling like flat, static white space.
-const PARTICLES = 14;
+// Purely decorative, full-viewport backdrop for a night-sky "power grid":
+// a deep void gradient, drifting nebula clouds in the brand's electric
+// palette, a faint circuit-like grid, a twinkling starfield, streaking
+// shooting stars, and a handful of softly rising embers.
+const STAR_COUNT = 70;
+const EMBER_COUNT = 12;
+const SHOOTING_STAR_COUNT = 6;
 
 export default function AmbientBackground() {
-  const particles = useMemo(
+  const stars = useMemo(
     () =>
-      Array.from({ length: PARTICLES }).map((_, i) => {
+      Array.from({ length: STAR_COUNT }).map((_, i) => {
+        const size = Math.random() < 0.82 ? 1 + Math.random() * 1.4 : 2 + Math.random() * 1.6;
+        const top = Math.round(Math.random() * 100);
+        const left = Math.round(Math.random() * 100);
+        const duration = 2.4 + Math.random() * 4.2;
+        const delay = Math.round(Math.random() * 60) / 10;
+        const min = (0.1 + Math.random() * 0.2).toFixed(2);
+        const max = (0.6 + Math.random() * 0.4).toFixed(2);
+        return { id: i, size, top, left, duration, delay, min, max };
+      }),
+    []
+  );
+
+  const embers = useMemo(
+    () =>
+      Array.from({ length: EMBER_COUNT }).map((_, i) => {
         const size = 3 + Math.round(Math.random() * 5);
         const left = Math.round(Math.random() * 100);
         const duration = 16 + Math.round(Math.random() * 14);
         const delay = Math.round(Math.random() * 18);
         const driftX = Math.round((Math.random() - 0.5) * 120);
-        const palette = ['bg-accent/25', 'bg-success/20', 'bg-warning/25', 'bg-primary/10'];
+        const palette = ['text-accent bg-accent/40', 'text-plasma bg-plasma/40', 'text-warning bg-warning/40'];
         const color = palette[i % palette.length];
         return { id: i, size, left, duration, delay, driftX, color };
       }),
     []
   );
 
+  const shootingStars = useMemo(
+    () =>
+      Array.from({ length: SHOOTING_STAR_COUNT }).map((_, i) => {
+        const startX = Math.round(Math.random() * 90);
+        const startY = Math.round(Math.random() * 45);
+        const angle = -28 - Math.round(Math.random() * 14);
+        const travelX = -(45 + Math.round(Math.random() * 30));
+        const travelY = 40 + Math.round(Math.random() * 30);
+        const duration = 6 + Math.round(Math.random() * 5);
+        const delay = i * 3.2 + Math.random() * 2.5;
+        const palette = ['text-accent', 'text-plasma', 'text-warning'];
+        const color = palette[i % palette.length];
+        return { id: i, startX, startY, angle, travelX, travelY, duration, delay, color };
+      }),
+    []
+  );
+
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
-      {/* Faint drifting blueprint grid across the whole viewport */}
+      {/* Deep space base */}
+      <div className="void-gradient absolute inset-0" />
+
+      {/* Faint drifting circuit grid across the whole viewport */}
       <div className="page-grid animate-mesh-shift absolute inset-0" />
 
-      {/* Large ambient gradient meshes */}
-      <div className="aurora-orb animate-float-slower absolute left-[-12rem] top-[-6rem] h-[26rem] w-[26rem] bg-accent/10" />
-      <div className="aurora-orb animate-float-slow absolute right-[-10rem] top-[35%] h-[22rem] w-[22rem] bg-success/10" />
-      <div className="aurora-orb animate-float-slower absolute bottom-[-10rem] left-[20%] h-[24rem] w-[24rem] bg-warning/10" />
-      <div className="aurora-orb animate-float-slow absolute bottom-[10%] right-[10%] h-64 w-64 bg-primary/5" />
+      {/* Large nebula gradient clouds */}
+      <div className="aurora-orb animate-float-slower absolute left-[-12rem] top-[-6rem] h-[28rem] w-[28rem] bg-plasma/20" />
+      <div className="aurora-orb animate-float-slow absolute right-[-10rem] top-[30%] h-[24rem] w-[24rem] bg-accent/20" />
+      <div className="aurora-orb animate-float-slower absolute bottom-[-10rem] left-[18%] h-[26rem] w-[26rem] bg-warning/10" />
+      <div className="aurora-orb animate-float-slow absolute bottom-[8%] right-[8%] h-72 w-72 bg-plasma/10" />
 
-      {/* Softly rising particles for ambient motion */}
-      {particles.map((p) => (
+      {/* Twinkling starfield */}
+      {stars.map((s) => (
+        <span
+          key={s.id}
+          className="star-twinkle"
+          style={
+            {
+              top: `${s.top}%`,
+              left: `${s.left}%`,
+              width: `${s.size}px`,
+              height: `${s.size}px`,
+              animationDuration: `${s.duration}s`,
+              animationDelay: `${s.delay}s`,
+              '--star-min': s.min,
+              '--star-max': s.max,
+            } as React.CSSProperties
+          }
+        />
+      ))}
+
+      {/* Shooting stars streaking across the sky */}
+      {shootingStars.map((s) => (
+        <span
+          key={s.id}
+          className={`shooting-star ${s.color}`}
+          style={
+            {
+              '--start-x': `${s.startX}vw`,
+              '--start-y': `${s.startY}vh`,
+              '--angle': `${s.angle}deg`,
+              '--travel-x': `${s.travelX}vw`,
+              '--travel-y': `${s.travelY}vh`,
+              animationDuration: `${s.duration}s`,
+              animationDelay: `${s.delay}s`,
+            } as React.CSSProperties
+          }
+        />
+      ))}
+
+      {/* Softly rising embers for ambient motion */}
+      {embers.map((p) => (
         <span
           key={p.id}
           className={`bg-particle ${p.color}`}

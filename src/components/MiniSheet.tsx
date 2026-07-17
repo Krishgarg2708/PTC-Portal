@@ -15,23 +15,23 @@ const ROWS: Array<'admin' | 'green' | 'yellow' | 'white'> = [
 const COLS = 5;
 
 const cellClass: Record<string, string> = {
-  admin: 'bg-primary',
+  admin: 'bg-gradient-to-br from-accent to-plasma',
   green: 'bg-success/80',
   yellow: 'bg-warning',
-  white: 'bg-white border border-slate-300',
+  white: 'bg-white/15 border border-white/25',
 };
 
 export default function MiniSheet() {
   return (
     <motion.div
-      className="group relative grid gap-1.5 overflow-hidden rounded-2xl bg-slate-50 p-4 shadow-inner"
+      className="group relative grid gap-1.5 overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 shadow-inner"
       role="img"
       aria-label="Illustration of a spreadsheet grid with color-coded permission cells"
       whileHover={{ scale: 1.015 }}
       transition={{ type: 'spring', stiffness: 260, damping: 20 }}
     >
       <motion.div
-        className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent"
+        className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent"
         animate={{ x: ['-100%', '160%'] }}
         transition={{ duration: 2.6, repeat: Infinity, repeatDelay: 1.4, ease: 'easeInOut' }}
         aria-hidden="true"
